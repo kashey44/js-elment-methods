@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+	<style>
+		#active{
+			background: gray;
+			
+		}
+		#hidden{
+			display: none;
+		}
+		#list{
+			padding: 5px 0px;
+		    margin: 0px;
+		    border: 1px solid gray;
+		    margin-bottom: 10px
+		}
+		#list li{
+			padding: 0 2px;
+		}
+	</style>
+
+	<title>Document</title>
+</head>
+<body>
+	<div>
+		<input type="text" id="namer">
+		<div id="hidden">
+			<ul id="list">
+				<li id="active">text 1</li>
+				<li>text 2</li>
+				<li>text 3</li>
+				<li>text 4</li>
+			</ul>
+			<button onclick="originList.getValue()">GetValue</button>
+			<button onclick="originList.setValue(document.getElementById('namer').value)">SetValue</button>
+			<button onclick="originList.reset()">Reset</button>
+		</div>
+	</div>
+	<script>
+		
+
+		var originList = {
+			list: document.getElementById('list').children,			
+			getValue: function(i = null){
+				document.getElementById('namer').focus();
+				if(i !=null ){
+					return document.getElementById('namer').value = this.list[i].innerHTML;
+				}
+				else{
+					return document.getElementById('namer').value = this.list['active'].innerHTML;
+				}
+			},
+			setValue: function(val, i = null){
+				document.getElementById('namer').focus();
+				if(i !=null ){
+					return this.list[i].innerHTML = val;
+				}
+				else{
+					return this.list['active'].innerHTML = val;
+				}
+			},
+			reset: function(i = null){
+				document.getElementById('namer').focus();
+				document.getElementById('namer').value = '';
+				if(i !=null ){
+					this.list[i].innerHTML = '';
+				}
+				else{
+					this.list['active'].innerHTML = '';
+				}
+			}
+		};
+		console.log(originList.list);
+
+		for (var i=0, child; child=originList.list[i]; i++) {
+			child.onclick = function(event){
+				document.getElementById('active').id = '';
+				this.id = 'active';
+				originList.getValue()
+			}
+		}
+		document.getElementById('namer').onclick = function(){
+
+			if(document.getElementById('hidden').style.display == 'none' || document.getElementById('hidden').style.display == ''){
+				document.getElementById('hidden').style.display = 'block';
+				originList.getValue();
+			}
+			else{
+				document.getElementById('hidden').style.display = 'none';
+			}
+
+		}
+		
+		//document.getElementById('namer').value = originList.get();
+		
+
+
+
+	</script>
+</body>
+</html>
